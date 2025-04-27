@@ -65,11 +65,53 @@ void pushDataToFile(const string& fileName)
 	cout << "Data pushed to file\n";
 }
 
+#include <iostream>
+using namespace std;
+
+class myFactory
+{
+public:
+    myFactory() {
+        cout << "Factory created\n";
+    }
+
+    void makeEngine() {
+        cout << "Making engine\n";
+    }
+
+    void makeWheel() {
+        cout << "Making wheel\n";
+    }
+
+    void makeChassis() {
+        cout << "Making chassis\n";
+    }
+
+    void makeTransmission() {
+        cout << "Making transmission\n";
+    }
+
+    void makeBrake() {
+        cout << "Making brake\n";
+    }
+
+    void makeBattery() {
+        cout << "Making battery\n";
+    }
+
+    void makeExhaust() {
+        cout << "Making exhaust\n";
+    }
+};
+
+
+
+
 int main() {
 	srand(static_cast<unsigned int>(time(0)));
 
 
-    thread make1(makeMeal1);
+   /* thread make1(makeMeal1);
     thread make2(makeMeal2);
     thread make3(makeMeat3);
 
@@ -90,7 +132,39 @@ int main() {
 
 	cout << "All data has been pushed to file\n";
 	cout << "Closing file\n";
-	myFile.close();
+	myFile.close();*/
+
+
+    cout << "Assembling the product...\n";
+	myFactory factory;
+
+
+	thread makeEngine([&factory]() { factory.makeEngine(); });
+	thread makeWheel([&factory]() { factory.makeWheel(); });
+	thread makeChassis([&factory]() { factory.makeChassis(); });
+	thread makeTransmission([&factory]() { factory.makeTransmission(); });
+	thread makeBrake([&factory]() { factory.makeBrake(); });
+	thread makeBattery([&factory]() { factory.makeBattery(); });
+	thread makeExhaust([&factory]() { factory.makeExhaust(); });
+
+
+	makeEngine.join();
+	makeWheel.join();
+	makeChassis.join();
+	makeTransmission.join();
+	makeBrake.join();
+	makeBattery.join();
+	makeExhaust.join();
+	cout << "All components have been assembled\n";
+	cout << "Finalizing assembly...\n";
+	// Simulate final assembly
+	this_thread::sleep_for(chrono::seconds(2));
+
+
+	cout << "Product assembled successfully!\n";
+
+
+
 
     return 0;
 }
